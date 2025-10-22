@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Me dá o Caneco? 💌</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #ff6262;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    #container {
+      background: #fff;
+      padding: 40px 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+    #container.fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 30px;
+    }
+    button {
+      padding: 12px 24px;
+      margin: 10px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    button:hover {
+      transform: scale(1.05);
+    }
+    #btnSim1, #btnSim2 {
+      background: #28a745;
+      color: #f5eded;
+    }
+    #btnNao {
+      background: #dc3545;
+      color: #c60c0c;
+      position: relative;
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: 1.4rem; }
+      button { width: 100%; margin: 8px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="container" class="fade-in">
+    <h1>Aceita me dar o caneco?</h1>
+    <button id="btnSim1">Sim</button>
+    <button id="btnNao">Não</button>
+  </div>
+
+  <script>
+    const btnNao  = document.getElementById('btnNao');
+    const btnSim1 = document.getElementById('btnSim1');
+    const container = document.getElementById('container');
+
+    // função para o botão “Não” fugir
+    btnNao.addEventListener('mouseover', () => {
+      const maxX = window.innerWidth  - btnNao.offsetWidth  - 20;
+      const maxY = window.innerHeight - btnNao.offsetHeight - 20;
+      const randX = Math.random() * maxX;
+      const randY = Math.random() * maxY;
+      btnNao.style.left = randX + 'px';
+      btnNao.style.top  = randY + 'px';
+      btnNao.style.position = 'absolute';
+    });
+
+    // clicou “Sim” na 1ª pergunta
+    btnSim1.addEventListener('click', () => {
+      container.innerHTML = `
+        <h1>Aceita me amar pelo resto da sua vida?</h1>
+        <button id="btnSim2">Sim</button>
+      `;
+      container.classList.remove('fade-in');
+      void container.offsetWidth; // força reflow pra reiniciar animação
+      container.classList.add('fade-in');
+
+      const btnSim2 = document.getElementById('btnSim2');
+      btnSim2.addEventListener('click', () => {
+        // 
+        container.innerHTML = `
+          <h1>Também te amo, meu bem 🎉</h1>
+          <a href="https://www.youtube.com/watch?v=11s6fUBLlp8" target="_blank">
+            <button>Te amo, veja com carinho </button>
+          </a>
+        `;
+      });
+    });
+  </script>
+</body>
+</html>
